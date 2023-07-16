@@ -26,3 +26,6 @@ sudo apt install ffmpeg
 ```angular2html
 python3 main.py
 ```
+
+##### Special thanks to :
++ Avijit Thawani (https://github.com/avi-jit)
