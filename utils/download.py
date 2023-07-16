@@ -1,11 +1,8 @@
-import youtube_dl
+from pytube import YouTube
 
 def download_video(url):
-    ydl_opts = {
-        'format': 'best',  # Download best quality.
-    }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info_dict = ydl.extract_info(url, download=False)
-        ydl.download([url])
-    video_path = ydl.prepare_filename(info_dict)
-    return video_path
+    youtube = YouTube(url)
+    video = youtube.streams.get_highest_resolution()
+    # Specify output path if needed, by default it downloads to working directory
+    file_path = video.download()
+    return file_path

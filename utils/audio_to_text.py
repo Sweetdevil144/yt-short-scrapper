@@ -1,18 +1,13 @@
 import speech_recognition as sr
-from pydub import AudioSegment
-from moviepy.editor import VideoFileClip
 
-def convert_audio_to_text(video_path):
-    video = VideoFileClip(video_path)
-    video.audio.write_audiofile("audio.wav")
-
-    sound = AudioSegment.from_wav("audio.wav")
-    sound.export("audio.flac", format="flac")
-
+def convert_audio_to_text(audio_path):
     r = sr.Recognizer()
-    audio_file = sr.AudioFile("audio.flac")
-
-    with audio_file as source:
+    audio = None
+    with sr.AudioFile(audio_path) as source:
         audio = r.record(source)
-    text = r.recognize_google(audio)
+    text = None
+    try:
+        text = r.recognize_google(audio)
+    except sr.RequestError as e:
+        print(f"Could not request results from Google Speech Recognition service; {e}")
     return text
